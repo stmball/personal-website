@@ -1,0 +1,84 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const papers = [
+	{
+		year: '2026',
+		title: 'Bayesian deep learning for uncertainty aware medical image segmentation correction and feature engineering: Applications to OCT imaging',
+		venue: 'Informatics in Medicine Unlocked',
+		doi: '10.1016/j.imu.2026.101763',
+		url: 'https://doi.org/10.1016/j.imu.2026.101763',
+	},
+	{
+		year: '2025',
+		title: 'Domain-specific AI segmentation of IMPDH2 rod/ring structures in mouse embryonic stem cells',
+		venue: 'BMC Biology',
+		doi: '10.1186/s12915-025-02226-7',
+		url: 'https://doi.org/10.1186/s12915-025-02226-7',
+	},
+	{
+		year: '2025',
+		title: 'Peroxiredoxin 2 mediates redox-stimulated adaptations to oxidative phosphorylation induced by contractile activity in human skeletal muscle myotubes',
+		venue: 'Free Radical Biology and Medicine',
+		doi: '10.1016/j.freeradbiomed.2024.11.053',
+		url: 'https://doi.org/10.1016/j.freeradbiomed.2024.11.053',
+	},
+	{
+		year: '2022',
+		title: 'DeepGANnel: Synthesis of fully annotated single molecule patch-clamp data using generative adversarial networks',
+		venue: 'PLOS ONE',
+		doi: '10.1371/journal.pone.0267452',
+		url: 'https://doi.org/10.1371/journal.pone.0267452',
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Papers & Grants | ${SITE_TITLE}`} description="Research publications and grants held by Samuel Ball." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<p class="eyebrow">Research outputs</p>
+			<h1>Papers & Grants</h1>
+			<p class="intro">Peer-reviewed journal articles on AI, medical imaging, electrophysiology, and health data science.</p>
+			<div class="papers">
+				{papers.map((paper) => (
+					<a class="paper" href={paper.url} target="_blank" rel="noreferrer">
+						<p class="year">{paper.year}</p>
+						<h2>{paper.title}</h2>
+						<p>{paper.venue}</p>
+						<span>DOI: {paper.doi} ↗</span>
+					</a>
+				))}
+			</div>
+			<section class="grants" aria-labelledby="grants-heading">
+				<p class="eyebrow">Funding</p>
+				<h2 id="grants-heading">Grants</h2>
+				<div class="papers">
+					<article class="paper">
+						<p class="year">AI SuperConnector</p>
+						<h3>OCT-Assist</h3>
+						<p>Support to develop interpretable AI methods for optical coherence tomography imaging, with a focus on clinically useful and explainable models.</p>
+					</article>
+				</div>
+			</section>
+		</main>
+		<style>
+			.eyebrow, .year { color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+			.intro { max-width: 42rem; }
+			.papers { display: grid; gap: 1rem; margin-top: 2rem; }
+			.grants { margin-top: 4rem; }
+			.grants h2 { font-size: 1.75rem; }
+			.paper { display: block; padding: 1.5rem; border: 1px solid rgb(var(--gray-light)); color: inherit; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+			.paper:hover { border-color: var(--accent); transform: translateY(-2px); }
+			.paper h2 { font-size: 1.25rem; }
+			.paper p { margin: 0 0 0.75rem; }
+			.paper span { color: var(--accent); font-size: 0.875rem; }
+		</style>
+	</body>
+</html>

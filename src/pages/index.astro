@@ -1,7 +1,8 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { Image } from 'astro:assets';
+import me from '../assets/me.jpg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
@@ -13,37 +14,81 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="home">
+				<div class="home-copy">
+          <h1>Samuel Ball, Lecturer in Health Data Science</h1>
+					<p>
+						I’m a health data scientist based at the University of Liverpool, working at the
+						intersection of artificial intelligence, data, and healthcare.
+					</p>
+					<p>
+						My work focuses on developing and evaluating AI models, and applying existing methods to
+						practical healthcare problems. I’m interested in building robust, clinically useful tools
+						that improve how health data is understood and used.
+					</p>
+					<p>
+						This site is a place to share my work, writing, and the ideas I’m exploring.
+					</p>
+				</div>
+				<div class="home-image">
+					<Image
+						src={me}
+						alt="Portrait of Sam Ball"
+						width={480}
+						height={480}
+						fit="cover"
+						position="right"
+						format="webp"
+					/>
+				</div>
+			</section>
 		</main>
-		<Footer />
+		<style>
+			main {
+				max-width: 1100px;
+			}
+
+			.home {
+				display: grid;
+				grid-template-columns: 3fr 2fr;
+				gap: 3rem;
+				align-items: center;
+			}
+
+			.home-copy h1 {
+				font-size: clamp(2.5rem, 5vw, 3.75rem);
+				letter-spacing: -0.04em;
+			}
+
+			.home-image {
+				position: relative;
+				aspect-ratio: 1;
+			}
+
+			.home-image::before {
+				position: absolute;
+				inset: 1.5rem -0.75rem -0.75rem 0.75rem;
+				z-index: -1;
+				background: #dff2e8;
+				content: '';
+				mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cpath fill='black' d='M437 90c46 68 59 187 17 277-41 90-137 150-229 132C133 481 28 394 6 291-16 188 44 69 139 25c95-44 252-3 298 65Z'/%3E%3C/svg%3E") center / contain no-repeat;
+				-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cpath fill='black' d='M437 90c46 68 59 187 17 277-41 90-137 150-229 132C133 481 28 394 6 291-16 188 44 69 139 25c95-44 252-3 298 65Z'/%3E%3C/svg%3E") center / contain no-repeat;
+			}
+
+			.home-image img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: 65% center;
+				mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cpath fill='black' d='M437 90c46 68 59 187 17 277-41 90-137 150-229 132C133 481 28 394 6 291-16 188 44 69 139 25c95-44 252-3 298 65Z'/%3E%3C/svg%3E") center / contain no-repeat;
+				-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cpath fill='black' d='M437 90c46 68 59 187 17 277-41 90-137 150-229 132C133 481 28 394 6 291-16 188 44 69 139 25c95-44 252-3 298 65Z'/%3E%3C/svg%3E") center / contain no-repeat;
+			}
+
+			@media (max-width: 720px) {
+				.home { display: block; }
+				.home-image { display: none; }
+			}
+		</style>
 	</body>
 </html>

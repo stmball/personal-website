@@ -22,23 +22,49 @@ import { SITE_TITLE } from '../consts';
 			<section>
 				<h2>Postgraduate teaching</h2>
 				<div class="teaching-item">
-					<p class="label">Module co-ordinator · 2025–26</p>
+					<p class="label">Module co-ordinator · 2025–27</p>
 					<h3>Artificial Intelligence and Machine Learning for Health</h3>
-					<p>DASC512 introduces postgraduate students to the principles and applications of AI and machine learning in health contexts.</p>
+          <p>DASC512 introduces postgraduate students to the principles and applications of AI and machine learning in health contexts; including deep learning and Agentic AI.</p>
+				</div>
+				<div class="teaching-item">
+					<p class="label">Module co-ordinator · 2026–27</p>
+					<h3>Responsible AI for Health</h3>
+          <p>DASC513 gives postgraduate students the skills to apply statistical and AI models responsibly, using PPIE to co-design health models, data engineering techniques to ensure data is handled safely, and methodological techniques in order to improve equity through modelling.</p>
 				</div>
 			</section>
 			<section>
 				<h2>Presentations</h2>
-				<p>I present on clinically useful AI, uncertainty in medical imaging, and reproducible approaches to health data science. A selection of slides and recordings will be added here.</p>
+				<div class="presentations">
+					<article class="presentation">
+						<h3>AI for Research Dissemination</h3>
+						<p>University of Lancashire</p>
+						<p class="description">A practical session on responsible approaches to using generative AI to share research more widely, including common pitfalls and ways to use automation frameworks to build more flexible AI applications.</p>
+					</article>
+					<article class="presentation">
+						<h3>Demystifying AI Hype</h3>
+						<p>North West Public Health Conference</p>
+						<p class="description">An interactive exercise in evaluating a fictional AI company, exploring the claims, metrics, and issues that surround health AI—and how to ask the right questions when working with health AI partners.</p>
+					</article>
+					<article class="presentation">
+						<h3>Liverpool City Region Residents’ Assembly on Data and AI Innovation</h3>
+						<p>Liverpool City Region</p>
+						<p class="description">I presented at this public deliberation on what trustworthy and beneficial data and AI innovation should look like locally. The Assembly brought together 59 residents and informed the region’s Community Charter on Data and AI.</p>
+					</article>
+				</div>
 			</section>
 		</main>
 		<style>
 			.eyebrow, .label { color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-			section { max-width: 42rem; margin-top: 3rem; }
+			section { margin-top: 3rem; }
 			section h2 { font-size: 1.5rem; }
 			.teaching-item { margin-top: 1rem; padding: 1.5rem; border-left: 3px solid var(--accent); background: #f4faf6; }
 			.teaching-item p { margin: 0.5rem 0 0; }
 			.teaching-item h3 { margin: 0; }
+			.presentations { display: grid; gap: 1rem; margin-top: 1rem; }
+			.presentation { padding-bottom: 1rem; border-bottom: 1px solid rgb(var(--gray-light)); }
+			.presentation h3, .presentation p { margin: 0; }
+			.presentation p { color: rgb(var(--gray)); }
+			.presentation .description { margin-top: 0.5rem; color: rgb(var(--gray-dark)); }
 		</style>
 	</body>
 </html>

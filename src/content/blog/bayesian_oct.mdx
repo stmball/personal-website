@@ -1,0 +1,58 @@
+---
+title: 'When an AI model knows when it might be wrong'
+description: 'A plain-language introduction to Bayesian AI for retinal OCT imaging.'
+pubDate: 'Aug 09 2026'
+---
+
+import { Image } from 'astro:assets';
+import uncertaintyModels from '../../assets/blog/bayesian-uncertainty-models.png';
+import uncertaintyExamples from '../../assets/blog/bayesian-uncertainty-examples.png';
+
+Artificial Intelligence conferences (e.g. MICCAI, CVPR) see hundreds of papers presented around improving AI accuracy; but very few of these models make it to clinical practice. Navigating the needs of clinically deploying an AI model for medical imaging is very different to training them in a lab. While data security and privacy are the top concerns for deploying these models in practice, another key issue is the inability for models to express *uncertainty* about their outputs in the same way a human would.
+
+Bayesian Neural Networks (BNNs), and particularly variational methods in theory offer a way to construct more acccurate probability distributions of outputs than standard neural networks. Then, we can measure features of this probability distribution in order to learn more about the certainties of the model. Bayes by Backprop is a principled approach to this where each neural network parameter is modelled as an independent Normal Distribution. In effect, this doubles the number of parameters for the network, as each parameter now has a variance associated with it (similar to a variational autoencoder).
+
+## What is an OCT scan?
+
+Optical coherence tomography (OCT) is a non-invasive imaging technique that produces cross-sectional images of the retina at the back of the eye. It lets clinicians inspect the individual retinal layers, much like looking at a slice through a cake. Measuring the thickness and volume of these layers can provide useful information in eye disease and neurological conditions, including multiple sclerosis.
+
+To make these measurements, the retinal layers need to be outlined - a process called *segmentation*. This is time-consuming to do by hand, making it a natural task for AI. However, scans can be noisy, poorly aligned, or affected by shadows. A conventional model can still produce a very confident-looking result in these situations, even when it has made a mistake.
+
+## Why did I add uncertainty?
+
+Most deep-learning models produce a single best answer. It is possible to estimate uncertainty afterwards - for example, by deliberately altering the input image or combining several separate models - but these approaches add complexity.
+
+For this work, I used *Bayes by Backprop*, a Bayesian neural-network approach. Instead of treating each internal model weight as a fixed number, it represents each weight with a probability distribution. Repeating a prediction gives a range of plausible answers rather than one answer. Where those answers agree, the model is more certain; where they differ, it is less certain.
+
+<Image
+  src={uncertaintyModels}
+  alt="Workflow showing Bayesian OCT segmentation during training and prediction, including uncertainty estimation, segmentation correction, and feature engineering."
+  class="figure"
+/>
+
+*Overview of my approach. During prediction, I sample the Bayesian model 64 times to produce a mean segmentation and separate uncertainty estimates. I then use those estimates to identify anomalies, correct low-confidence artefacts, and derive uncertainty-aware measurements.*
+
+## What did I test?
+
+I trained a Bayesian convolutional neural network to segment retinal layers in open OCT datasets. One dataset contained scans from 14 healthy controls and 21 people with multiple sclerosis; the other contained scans from people with diabetic macular oedema. Alongside identifying the retinal layers, I asked the model to estimate two distinct sources of uncertainty:
+
+- **Epistemic uncertainty**: uncertainty caused by limited knowledge in the model itself. This can increase when a scan differs from the kind of data the model saw during training.
+- **Aleatoric uncertainty**: uncertainty that comes from the image or measurement process, such as noise or a fuzzy boundary between retinal layers.
+
+On the multiple-sclerosis dataset, the Bayesian model achieved an overall Dice score of 0.928 (0.914 when background classes were excluded), comparable with the deterministic U-Net baseline. On the diabetic-macular-oedema dataset, its overall score was 0.859, close to the 0.869 agreement between two human annotators. The useful result was not only the accuracy score, however: the uncertainty estimates highlighted images where the segmentation was likely to be less trustworthy.
+
+<Image
+  src={uncertaintyExamples}
+  alt="OCT scans from the multiple-sclerosis and diabetic-macular-oedema datasets with ground-truth and predicted retinal-layer masks, plus epistemic and aleatoric uncertainty maps."
+  class="figure"
+/>
+
+*Examples from the datasets used in the paper. The uncertainty maps show where the model is less certain about retinal-layer boundaries; aleatoric uncertainty is particularly evident in noisier image regions.*
+
+## Why does this matter?
+
+I see uncertainty as a potential quality-control signal in a clinical workflow. Rather than accepting every automated measurement, a system like this could flag scans for review or reacquisition when uncertainty is unusually high. I can also attach uncertainty to derived measurements, such as retinal layer volume, so later statistical analyses account for how reliable those measurements are.
+
+This model is not ready to diagnose patients on its own. It requires repeated forward passes, which adds computational cost, and I used relatively small, carefully curated open datasets. Larger multi-centre and cross-device studies are needed before this approach can be assessed in real clinical settings. For me, it illustrates a useful direction for medical AI: models should not only make predictions, but also communicate the limits of those predictions.
+
+The full paper is available in [Informatics in Medicine Unlocked](https://doi.org/10.1016/j.imu.2026.101763).

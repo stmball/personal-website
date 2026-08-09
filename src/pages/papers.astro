@@ -45,7 +45,6 @@ const papers = [
 		<main>
 			<p class="eyebrow">Research outputs</p>
 			<h1>Papers & Grants</h1>
-			<p class="intro">Peer-reviewed journal articles on AI, medical imaging, electrophysiology, and health data science.</p>
 			<div class="papers">
 				{papers.map((paper) => (
 					<a class="paper" href={paper.url} target="_blank" rel="noreferrer">
@@ -61,6 +60,11 @@ const papers = [
 				<h2 id="grants-heading">Grants</h2>
 				<div class="papers">
 					<article class="paper">
+						<p class="year">NIHR Better Methods Better Research</p>
+						<h3>Outcomes Tracker</h3>
+						<p>Funding to use large language models and agentic methods to track medical outcomes in clinical-trial literature, identify outcome-reporting bias, and support core outcome set uptake.</p>
+					</article>
+					<article class="paper">
 						<p class="year">AI SuperConnector</p>
 						<h3>OCT-Assist</h3>
 						<p>Support to develop interpretable AI methods for optical coherence tomography imaging, with a focus on clinically useful and explainable models.</p>
@@ -70,7 +74,6 @@ const papers = [
 		</main>
 		<style>
 			.eyebrow, .year { color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-			.intro { max-width: 42rem; }
 			.papers { display: grid; gap: 1rem; margin-top: 2rem; }
 			.grants { margin-top: 4rem; }
 			.grants h2 { font-size: 1.75rem; }

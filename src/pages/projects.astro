@@ -7,60 +7,46 @@ import { SITE_TITLE } from '../consts';
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Projects | ${SITE_TITLE}`} description="Research and community projects by Samuel Ball." />
+		<BaseHead title={`Projects | ${SITE_TITLE}`} description="Research projects by Samuel Ball." />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<p class="eyebrow">Research & community</p>
+			<p class="eyebrow">Research</p>
 			<h1>Projects</h1>
 			<div class="projects">
 				<article class="project">
-					<div class="project-image oct" aria-hidden="true"><span>OCT</span><i></i><i></i><i></i></div>
-					<div>
-						<h2>OCT-Assist</h2>
-						<p>OCT-Assist develops interpretable AI for optical coherence tomography imaging. The project brings clinical and AI expertise together to create models that are accurate, explainable, and useful in practice.</p>
-					</div>
-				</article>
-				<article class="project reverse">
-					<div class="project-image gan" aria-hidden="true"><span>GAN</span><i></i><i></i><i></i><i></i></div>
-					<div>
-						<h2>DeepGANnel</h2>
-						<p>DeepGANnel uses generative adversarial networks to create fully annotated single-molecule patch-clamp data. It supports the development and evaluation of machine-learning approaches for electrophysiological signals.</p>
-					</div>
+					<h2>Interpretable Medical Imaging</h2>
+					<p>
+						AI research in medical imaging is extensive, but translating models into routine clinical use remains difficult. Clinicians need outputs that can be assessed in context, including what a model does not know, rather than a prediction alone. Recent evidence identifies limited clinician involvement and the absence of clinically meaningful evaluation as important barriers to the use of explainable AI in routine workflows.
+					</p>
+					<p>
+						My work with <strong>OCT-Assist</strong> and <a href="https://doi.org/10.1016/j.imu.2026.101763">Bayesian deep learning for OCT imaging</a> focuses on uncertainty-aware and interpretable methods for optical coherence tomography. The aim is to produce models whose outputs support clinical judgement, including identifying uncertain segmentations, image artefacts, and the reliability of clinically relevant measurements.
+					</p>
 				</article>
 				<article class="project">
-					<div class="project-image hipy" aria-hidden="true"><span>HiPy</span><i></i><i></i><i></i></div>
-					<div>
-						<h2>HiPy</h2>
-						<p>HiPy is a grassroots programming community that supports people learning Python. Through accessible, collaborative events, it has helped thousands of students and staff build confidence in coding.</p>
-					</div>
+					<h2>Medical Outcomes Intelligence</h2>
+					<p>
+						Good health-data science depends on measuring outcomes that are meaningful, comparable, and practical to collect. Through the NIHR Outcomes Tracker project and work with the <a href="https://www.comet-initiative.org/">COMET Initiative</a>, I am interested in making outcomes data more useful across research studies and healthcare settings.
+					</p>
+					<p>
+						Outcomes Tracker, funded through NIHR Better Methods Better Research, applies large language models and agentic methods to identify and track medical outcomes in clinical-trial literature. The project aims to surface outcome-reporting bias and provide evidence that can support the review and uptake of core outcome sets.
+					</p>
+					<p>
+						Core outcome sets establish a minimum set of outcomes to measure and report for a health condition or area of care. They can reduce research waste, support comparison between studies, and help ensure that the questions measured reflect what matters to patients, clinicians, and decision-makers. This work connects methodological rigour with practical data infrastructure, so that evidence can travel further and inform better health outcomes.
+					</p>
+					<p class="source"><a href="https://www.cometinitiative.org/">Learn about core outcome sets through the COMET Initiative ↗</a></p>
 				</article>
 			</div>
 		</main>
 		<style>
 			.eyebrow { color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-			.projects { display: grid; gap: 4rem; margin-top: 2rem; }
-			.project { display: grid; grid-template-columns: 2fr 3fr; gap: 2rem; align-items: center; }
-			.project.reverse .project-image { order: 2; }
+			.projects { margin-top: 2rem; }
+			.project { padding: 2.5rem 0; border-top: 1px solid rgb(var(--gray-light)); }
+			.project:last-child { border-bottom: 1px solid rgb(var(--gray-light)); }
 			.project h2 { font-size: 1.75rem; }
-			.project-image { position: relative; display: flex; min-height: 15rem; align-items: center; justify-content: center; overflow: hidden; background: #dff2e8; color: var(--accent); font-size: 2rem; font-weight: 700; letter-spacing: -0.08em; }
-			.project-image i { position: absolute; display: block; border: 2px solid currentColor; border-radius: 50%; opacity: 0.45; }
-			.oct i:nth-of-type(1) { width: 145%; height: 35%; }
-			.oct i:nth-of-type(2) { width: 120%; height: 55%; }
-			.oct i:nth-of-type(3) { width: 95%; height: 75%; }
-			.gan { background: #e5f0ea; }
-			.gan i { width: 1rem; height: 1rem; background: var(--accent); border: 0; }
-			.gan i:nth-of-type(1) { transform: translate(-5rem, -3rem); }
-			.gan i:nth-of-type(2) { transform: translate(4rem, -2rem); }
-			.gan i:nth-of-type(3) { transform: translate(-3rem, 3rem); }
-			.gan i:nth-of-type(4) { transform: translate(5rem, 4rem); }
-			.hipy { background: #edf6f0; }
-			.hipy i { width: 7rem; height: 7rem; }
-			.hipy i:nth-of-type(1) { transform: translate(-4rem, -2rem); }
-			.hipy i:nth-of-type(2) { transform: translate(4rem, -2rem); }
-			.hipy i:nth-of-type(3) { transform: translate(0, 4rem); }
-			@media (max-width: 720px) { .project, .project.reverse { display: block; } .project.reverse .project-image { order: unset; } .project-image { margin-bottom: 1.5rem; min-height: 12rem; } }
+			.project p { margin: 0 0 1rem; }
+			.source { font-size: 0.9rem; }
 		</style>
 	</body>
 </html>

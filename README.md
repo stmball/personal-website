@@ -1,23 +1,19 @@
-# Astro Starter Kit: Blog
+# Personal website
+
+Samuel Ball's personal website; built with Astro and deployed as a static site on Cloudflare Pages.
+
+## Development
+
+Install dependencies and start Astro's background development server:
 
 ```sh
-npm create astro@latest -- --template blog
+npm ci
+npm run dev -- --background
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Use `npm run astro -- dev status`, `npm run astro -- dev logs`, and `npm run astro -- dev stop` to manage the server.
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
 ├── public/
@@ -33,31 +29,32 @@ Inside of your Astro project, you'll see the following folders and files:
 └── tsconfig.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Pages are in `src/pages`; reusable components are in `src/components`; blog posts are in `src/content/blog`; and static assets are in `public`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
+## Commands
 
 All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
+| `npm ci`                  | Installs the locked dependencies                 |
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## Cloudflare Pages deployment
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Connect this repository to a Cloudflare Pages project with these build settings:
 
-## Credit
+| Setting | Value |
+| :-- | :-- |
+| Production branch | `main` |
+| Framework preset | `Astro` |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Cloudflare Pages builds production deployments from `main` and preview deployments from pull requests. No Astro adapter is required because the site is statically generated. The canonical production URL is `https://stmball.uk`; if the domain changes, update the `site` value in `astro.config.mjs` so canonical URLs, the sitemap, and RSS links remain correct.
+
+The design began with Astro's [blog starter](https://github.com/withastro/astro/tree/main/examples/blog).

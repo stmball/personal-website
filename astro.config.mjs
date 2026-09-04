@@ -6,6 +6,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	// Custom production domain served by Cloudflare Pages.
+	site: 'https://stmball.uk',
 	integrations: [mdx(), sitemap()],
 });

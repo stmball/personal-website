@@ -6,7 +6,16 @@ import HeaderLink from './HeaderLink.astro';
 <header>
 	<nav>
 		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
+		<button
+			class="menu-toggle"
+			type="button"
+			aria-expanded="false"
+			aria-controls="primary-navigation"
+		>
+			<span class="menu-icon" aria-hidden="true"></span>
+			<span>Menu</span>
+		</button>
+		<div class="internal-links" id="primary-navigation" hidden>
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
 			<HeaderLink href="/papers">Papers & Grants</HeaderLink>
@@ -15,11 +24,41 @@ import HeaderLink from './HeaderLink.astro';
 		</div>
 	</nav>
 </header>
+
+<script>
+	const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
+	const menu = document.querySelector<HTMLElement>('#primary-navigation');
+
+	if (menuButton && menu) {
+		const closeMenu = () => {
+			menuButton.setAttribute('aria-expanded', 'false');
+			menu.hidden = true;
+		};
+
+		menuButton.addEventListener('click', () => {
+			const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+			menuButton.setAttribute('aria-expanded', String(!isOpen));
+			menu.hidden = isOpen;
+		});
+
+		menu.addEventListener('click', (event) => {
+			if ((event.target as HTMLElement).closest('a')) closeMenu();
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && !menu.hidden) {
+				closeMenu();
+				menuButton.focus();
+			}
+		});
+	}
+</script>
+
 <style>
 	header {
 		padding: 0 1.5rem;
 		border-bottom: 1px solid rgb(var(--gray-light));
-    text-transform: uppercase;
+		text-transform: uppercase;
 	}
 	h2 {
 		margin: 0;
@@ -34,8 +73,9 @@ import HeaderLink from './HeaderLink.astro';
 	nav {
 		display: flex;
 		align-items: center;
-		justify-content: left;
+		justify-content: flex-start;
 	}
+
 	nav a {
 		padding: 1rem 1rem;
 		color: rgb(var(--black));
@@ -45,9 +85,109 @@ import HeaderLink from './HeaderLink.astro';
 		color: var(--accent);
 	}
 
+	.internal-links {
+		display: flex;
+	}
+
+	.internal-links[hidden] {
+		display: flex;
+	}
+
+	.menu-toggle {
+		display: none;
+	}
+
 	@media (max-width: 720px) {
 		header {
-			padding: 0 1rem;
+			padding: 0;
+		}
+
+		nav {
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+
+		h2 a,
+		.menu-toggle {
+			min-height: 3.5rem;
+		}
+
+		.menu-toggle {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.55rem;
+			margin-right: 0.5rem;
+			padding: 0.75rem 0.5rem;
+			border: 0;
+			background: transparent;
+			color: rgb(var(--black));
+			font: inherit;
+			font-size: 0.875rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			cursor: pointer;
+		}
+
+		.menu-toggle:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 2px;
+		}
+
+		.menu-icon,
+		.menu-icon::before,
+		.menu-icon::after {
+			display: block;
+			width: 1.25rem;
+			height: 2px;
+			background: currentColor;
+			transition: transform 160ms ease, opacity 160ms ease;
+		}
+
+		.menu-icon {
+			position: relative;
+		}
+
+		.menu-icon::before,
+		.menu-icon::after {
+			position: absolute;
+			left: 0;
+			content: '';
+		}
+
+		.menu-icon::before { transform: translateY(-0.4rem); }
+		.menu-icon::after { transform: translateY(0.4rem); }
+
+		.menu-toggle[aria-expanded='true'] .menu-icon {
+			background: transparent;
+		}
+
+		.menu-toggle[aria-expanded='true'] .menu-icon::before {
+			transform: rotate(45deg);
+		}
+
+		.menu-toggle[aria-expanded='true'] .menu-icon::after {
+			transform: rotate(-45deg);
+		}
+
+		.internal-links,
+		.internal-links[hidden] {
+			display: none;
+			flex: 0 0 100%;
+			border-top: 1px solid rgb(var(--gray-light));
+		}
+
+		.internal-links:not([hidden]) {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			padding: 0.35rem 0.5rem 0.65rem;
+		}
+
+		.internal-links :global(a) {
+			padding: 0.7rem 0.5rem;
+		}
+
+		.internal-links :global(a):last-child {
+			grid-column: 1 / -1;
 		}
 	}
 </style>
